@@ -1,0 +1,5 @@
+apiVersion: v2
+name: wordpress-helm
+description: A Helm chart for deploying WordPress with MySQL and phpMyAdmin
+version: 0.1.0
+appVersion: "6.2.2"  # WordPress 版本

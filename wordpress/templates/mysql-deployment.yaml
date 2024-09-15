@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+        - name: mysql
+          image: {{ .Values.mysql.image }}
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: {{ .Values.mysql.rootPassword }}
+            - name: MYSQL_USER
+              value: {{ .Values.mysql.user }}
+            - name: MYSQL_PASSWORD
+              value: {{ .Values.mysql.password }}
+            - name: MYSQL_DATABASE
+              value: {{ .Values.mysql.database }}
+            - name: MYSQL_BINLOG_FORMAT
+              value: "ROW"
+            - name: MYSQL_LOG_BIN
+              value: "ON"
+          ports:
+            - containerPort: 3306
+          volumeMounts:
+            - name: mysql-binlog
+              mountPath: /var/lib/mysql-binlog
+      volumes:
+        - name: mysql-binlog
+          emptyDir: {}

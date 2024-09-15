@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress-ingress
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  ingressClassName: traefik
+  tls:
+  - hosts:
+    - {{ .Values.ingress.wordpress.host }}
+    secretName: wordpress-tls
+  - hosts:
+    - {{ .Values.ingress.phpmyadmin.host }}
+    secretName: phpmyadmin-tls
+  rules:
+    - host: "{{ .Values.ingress.wordpress.host }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: wordpress
+                port:
+                  number: 10080
+    - host: "{{ .Values.ingress.phpmyadmin.host }}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: phpmyadmin
+                port:
+                  number: 10081

@@ -1,0 +1,29 @@
+# MySQL 配置
+mysql:
+  image: mysql:5.7
+  user: my-user
+  password: my-password
+  rootPassword: my-root-password
+  database: my-database
+  binlogEnabled: true
+
+# phpMyAdmin 配置
+phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+
+# WordPress 配置
+wordpress:
+  image: wordpress:6.2.2
+  siteName: My WordPress Site
+
+# Ingress 配置
+ingress:
+  enabled: true
+  wordpress:
+    host: wp.eng.atomi.ai
+  phpmyadmin:
+    host: phpmyadmin.eng.atomi.ai
+
+# Data collector 配置
+dataCollector:
+  image: my-data-collector-image

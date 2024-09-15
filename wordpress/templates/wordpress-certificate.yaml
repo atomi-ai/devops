@@ -1,0 +1,18 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wordpress-tls
+  namespace: wp-exp
+spec:
+  secretName: wordpress-tls  # 将证书存储在这个Secret中
+  issuerRef:
+    name: letsencrypt-prod  # 关联到前面定义的Issuer
+    kind: ClusterIssuer
+  commonName: wp.eng.atomi.ai
+  dnsNames:
+    - wp.eng.atomi.ai
+  duration: 2160h  # 90天等于2160小时
+  renewBefore: 720h  # 提前30天续订 (30天等于720小时)
+  privateKey:
+    algorithm: RSA
+    size: 2048
